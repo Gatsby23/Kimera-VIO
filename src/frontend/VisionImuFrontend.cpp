@@ -53,17 +53,15 @@ VisionImuFrontend::~VisionImuFrontend() {
 
 FrontendOutputPacketBase::UniquePtr VisionImuFrontend::spinOnce(
     FrontendInputPacketBase::UniquePtr&& input) {
-  switch (frontend_state_) {
-    case FrontendState::Bootstrap: {
+  if (frontend_state_ == FrontendState::Bootstrap) {
       return bootstrapSpin(std::move(input));
-    } break;
-    case FrontendState::Nominal: {
+    }
+  else if (frontend_state_ == FrontendState::Nominal) {
       return nominalSpin(std::move(input));
-    } break;
-    default: {
+    }
+  else {
       LOG(FATAL) << "Unrecognized Frontend state.";
-    } break;
-  }
+    }
 }
 
 void VisionImuFrontend::outlierRejectionMono(
@@ -73,7 +71,7 @@ void VisionImuFrontend::outlierRejectionMono(
     TrackingStatusPose* status_pose_mono) {
   CHECK_NOTNULL(status_pose_mono);
   if (tracker_->tracker_params_.ransac_use_2point_mono_ &&
-      !keyframe_R_cur_frame.equals(gtsam::Rot3::identity())) {
+      !keyframe_R_cur_frame.equals(gtsam::Rot3::Identity())) {
     // 2-point RANSAC.
     // TODO(marcus): move things from tracker here, only ransac in tracker.cpp
     *status_pose_mono = tracker_->geometricOutlierRejectionMonoGivenRotation(

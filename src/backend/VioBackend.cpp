@@ -78,7 +78,7 @@ VioBackend::VioBackend(const Pose3& B_Pose_leftCam,
       timestamp_lkf_(-1),
       imu_bias_lkf_(ImuBias()),
       W_Vel_B_lkf_(gtsam::Vector3::Zero()),
-      W_Pose_B_lkf_(gtsam::Pose3::identity()),
+      W_Pose_B_lkf_(gtsam::Pose3::Identity()),
       imu_bias_prev_kf_(ImuBias()),
       B_Pose_leftCam_(B_Pose_leftCam),
       stereo_cal_(stereo_calibration),
@@ -133,21 +133,16 @@ BackendOutput::UniquePtr VioBackend::spinOnce(const BackendInput& input) {
   if (VLOG_IS_ON(10)) input.print();
 
   bool backend_status = false;
-  switch (backend_state_) {
-    case BackendState::Bootstrap: {
+  if(backend_state_ == BackendState::Bootstrap){
       initializeBackend(input);
       backend_status = true;
-      break;
-    }
-    case BackendState::Nominal: {
+  }
+  else if (backend_state_ == BackendState::Nominal){
       // Process data with VIO.
       backend_status = addVisualInertialStateAndOptimize(input);
-      break;
-    }
-    default: {
+  }
+  else{
       LOG(FATAL) << "Unrecognized Backend state.";
-      break;
-    }
   }
 
   // Fill ouput_payload (it will remain nullptr if the backend_status is not ok)
@@ -837,7 +832,7 @@ void VioBackend::addNoMotionFactor(const FrameId& from_id,
       boost::make_shared<gtsam::BetweenFactor<gtsam::Pose3>>(
           gtsam::Symbol(kPoseSymbolChar, from_id),
           gtsam::Symbol(kPoseSymbolChar, to_id),
-          gtsam::Pose3::identity(),
+          gtsam::Pose3::Identity(),
           no_motion_prior_noise_));
 
   debug_info_.numAddedNoMotionF_++;

@@ -1,5 +1,7 @@
 /build/
 /data-sets/
+/cmake-build-debug/*
+/cmake-build-release/*
 /.settings/
 /matlab/result-*
 /scripts/**/*.txt
