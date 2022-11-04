@@ -74,11 +74,7 @@ gtsam::Vector3 UndistorterRectifier::UndistortKeypointAndGetVersor(
 
   KeypointsCV undistorted_keypoint;
   UndistorterRectifier::UndistortRectifyKeypoints(
-      distorted_keypoint,
-      &undistorted_keypoint,
-      cam_param,
-      R,
-      boost::none);
+      distorted_keypoint, &undistorted_keypoint, cam_param, R, boost::none);
 
   // Transform to unit vector.
   gtsam::Vector3 versor(
@@ -97,8 +93,8 @@ gtsam::Vector3 UndistorterRectifier::UndistortKeypointAndGetVersor(
   //  std::cout << "distorted_keypoint: \n" << distorted_keypoint << std::endl;
   //  std::cout << "distorted_keypoint_gtsam: \n" << distorted_keypoint_gtsam <<
   //  std::endl; std::cout << "px_mismatch: \n" << px_mismatch << std::endl;
-  //  throw std::runtime_error("UndistortKeypointAndGetVersor: possible calibration
-  //  mismatch");
+  //  throw std::runtime_error("UndistortKeypointAndGetVersor: possible
+  //  calibration mismatch");
   //}
 
   // Return unit norm vector
@@ -165,12 +161,12 @@ void UndistorterRectifier::checkUndistortedRectifiedLeftKeypoints(
         // and for which the undistorted rectified keypoint remaps close to
         // the distorted unrectified pixel.
         VLOG(5) << "Pixel mismatch when checking undistortRectification! \n"
-                 << "Actual undistorted Keypoint: \n"
-                 << " - x: " << undistorted_kp.x << '\n'
-                 << " - y: " << undistorted_kp.y << '\n'
-                 << "Expected undistorted Keypoint: \n"
-                 << " - x: " << expected_distorted_kp_x << '\n'
-                 << " - y: " << expected_distorted_kp_y;
+                << "Actual undistorted Keypoint: \n"
+                << " - x: " << undistorted_kp.x << '\n'
+                << " - y: " << undistorted_kp.y << '\n'
+                << "Expected undistorted Keypoint: \n"
+                << " - x: " << expected_distorted_kp_x << '\n'
+                << " - y: " << expected_distorted_kp_y;
         // Invalid points.
         invalid_count += 1;
         status_kps->push_back(
@@ -183,9 +179,9 @@ void UndistorterRectifier::checkUndistortedRectifiedLeftKeypoints(
     }
   }
 
-  VLOG_IF(5, invalid_count > 0) << "undistortRectifyPoints: unable to match "
-                                 << invalid_count << " keypoints of "
-                                 << undistorted_kps.size() << " total.";
+  VLOG_IF(5, invalid_count > 0)
+      << "undistortRectifyPoints: unable to match " << invalid_count
+      << " keypoints of " << undistorted_kps.size() << " total.";
 }
 
 void UndistorterRectifier::distortUnrectifyKeypoints(

@@ -32,10 +32,6 @@ namespace VIO {
 /*
  * Compact storage of state.
  */
-/******************************************************
- * @brief 主要是vio的状态: pose、velocity、bias
- * 其中bias是用gtsam内部结构【acc_bias和gyro_bias耦合在一块】
- *****************************************************/
 class VioNavState {
  public:
   KIMERA_POINTER_TYPEDEFS(VioNavState);

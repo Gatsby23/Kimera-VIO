@@ -5,6 +5,9 @@
 /.settings/
 /matlab/result-*
 /scripts/**/*.txt
+.idea/
+.idea/*/*
+.idea/*
 /*/*.csv
 *.ipynb_checkpoints
 *.autosave
