@@ -32,6 +32,12 @@ namespace VIO {
 /*
  * Compact storage of state.
  */
+/**************************************************
+ * VIO的状态量组成：主要是基于GTSAM的状态表示
+ * POSE: 基于李群的表示（旋转+平移）.
+ * Velocity: 三维速度表示.
+ * imu_bias：IMU的旋转+加速度bias（融合在一块）.
+ ***************************************************/
 class VioNavState {
  public:
   KIMERA_POINTER_TYPEDEFS(VioNavState);

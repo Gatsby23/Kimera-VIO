@@ -84,6 +84,7 @@ class StereoImuPipeline : public Pipeline {
 
  protected:
   //! Definition of sensor rig used
+  // 这里是针对双目的常量指针.
   StereoCamera::ConstPtr stereo_camera_;
 };
 

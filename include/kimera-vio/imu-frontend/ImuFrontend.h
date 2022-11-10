@@ -68,13 +68,18 @@ public:
  * Eventually, call resetIntegrationAndSetBias when you would like to update
  * the Imu bias.
  */
+/********************************
+ * @brief 这里主要是IMU的预积分模块.
+ ********************************/
 class ImuFrontend {
 public:
  using PimPtr = std::shared_ptr<gtsam::PreintegrationType>;
  using PimUniquePtr = std::unique_ptr<gtsam::PreintegrationType>;
 
 public:
+ // 关于类指针的宏定义.
  KIMERA_POINTER_TYPEDEFS(ImuFrontend);
+ // 关于拷贝和构造函数的宏定义.
  KIMERA_DELETE_COPY_CONSTRUCTORS(ImuFrontend);
  EIGEN_MAKE_ALIGNED_OPERATOR_NEW
 
@@ -90,6 +95,7 @@ public:
  ~ImuFrontend() = default;
 
  /* ------------------------------------------------------------------------ */
+ // 这里的写法没有看懂->但是这里操作的是处理加速度
  PimPtr preintegrateImuMeasurements(const ImuStampS& imu_stamps,
                                     const ImuAccGyrS& imu_accgyr);
  PimPtr preintegrateImuMeasurements(const ImuStampS& imu_stamps,
@@ -100,6 +106,7 @@ public:
                                     const ImuAccGyr& imu_accgyr) = delete;
 
  /* ------------------------------------------------------------------------- */
+ // 这里的操作是处理陀螺仪角速度
  gtsam::Rot3 preintegrateGyroMeasurements(const ImuStampS& imu_stamps,
                                           const ImuAccGyrS& imu_accgyr);
  gtsam::Rot3 preintegrateGyroMeasurements(const ImuStampS& imu_stamps,
